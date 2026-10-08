@@ -1,0 +1,33 @@
+# Fantasy Football ML
+
+A machine learning research project that predicts weekly **PPR fantasy points** for NFL quarterbacks, running backs, wide receivers and tight ends, and tests whether ML beats simple recent-form baselines.
+
+**Team:** Partner A (data & features) · Partner B (modeling & evaluation)
+
+## Research questions
+
+1. Can a machine learning model using usage, matchup and Vegas features predict weekly PPR points more accurately than a simple recent-form baseline?
+2. Which features matter most, and does that differ by position?
+3. Where does the model fail?
+
+## Data
+
+Free data from [nflverse](https://github.com/nflverse/nflverse-data/releases): weekly player stats, schedules (Vegas lines, rest days) and snap counts, 2020-2026.
+
+- Train: 2020-2024 · Test: 2025 · Live predictions: 2026 season
+
+## Results
+
+*Coming soon.* Main results table and figures will go here.
+
+## Project docs
+
+- [Roadmap](ROADMAP.md): phases, tasks per partner, research checkpoints
+- [Research log](docs/RESEARCH_LOG.md)
+- [Decisions](docs/DECISIONS.md)
+- [Poster evidence tracker](docs/POSTER_EVIDENCE.md)
+
+## How to run
+
+1. Open the notebooks in Google Colab, in order (`notebooks/01_...` onward)
+2. Install the data library: `pip install nflreadpy`
