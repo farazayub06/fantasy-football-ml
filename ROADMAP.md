@@ -41,12 +41,13 @@ Write these on the first page of the research log. Every phase answers part of t
 - [ ] Write the research questions into the research log
 
 **Partner A**
-- [ ] Set up Google Colab and connect it to the repo (open notebooks from GitHub, save copies back)
+- [ ] Set up VS Code with the Python and Jupyter extensions, clone the repo, create a `.venv` and `pip install -r requirements.txt` (steps in `README.md`)
 - [ ] Test loading data with `nflreadpy` (`pip install nflreadpy`, then `.to_pandas()` on results)
 
 **Partner B**
 - [ ] Write the first version of `README.md`: one paragraph on the project, the research questions, how to run it
-- [ ] Add a `.gitignore` that excludes `data/raw/` (large files don't belong in Git)
+- [ ] Add a `.gitignore` that excludes `data/raw/` and `.venv/` (large files don't belong in Git)
+- [ ] Do the same VS Code setup as Partner A, and add any new package you use to `requirements.txt`
 
 > 🔬 **Research checkpoint 0: Starting point**
 > - Log entry: why you chose this project, what you expect to find, your current ML experience
@@ -240,6 +241,7 @@ Only if Phases 3-5 are done.
 fantasy-football-ml/
 ├── README.md                  # project summary, results, how to run
 ├── ROADMAP.md                 # this file
+├── requirements.txt           # Python packages for the notebooks
 ├── docs/
 │   ├── RESEARCH_LOG.md        # dated entries, both partners
 │   ├── DECISIONS.md           # every important choice and why

@@ -1,0 +1,8 @@
+# Python packages for the notebooks. Install with: pip install -r requirements.txt
+nflreadpy
+pandas
+numpy
+pyarrow
+scikit-learn
+matplotlib
+ipykernel

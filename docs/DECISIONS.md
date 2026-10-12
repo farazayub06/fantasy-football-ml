@@ -27,6 +27,12 @@ Every important choice, why you made it, and what else you considered. Judges at
 **Why:** Free, documented, updated weekly, covers 1999 to today.
 **Alternatives considered:** Paid APIs; R packages `nflreadr` / `nflfastR` (same data, but we're using Python).
 
+### 2026-10-12 · Notebooks: Jupyter in VS Code, not Google Colab
+
+**Decision:** Run the notebooks locally in VS Code (Jupyter extension) with a shared `.venv` built from `requirements.txt`.
+**Why:** Notebooks live in the repo and are committed with normal Git; no re-installing packages every session; same package versions for both partners.
+**Alternatives considered:** Google Colab (free GPU we don't need, but packages reset each session and syncing notebooks back to GitHub is clumsy).
+
 ### (to decide) · Train/test split
 ### (to decide) · Handling early-season weeks with little history
 ### (to decide) · Handling missing snap counts
