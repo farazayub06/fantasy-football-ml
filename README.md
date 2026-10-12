@@ -29,5 +29,13 @@ Free data from [nflverse](https://github.com/nflverse/nflverse-data/releases): w
 
 ## How to run
 
-1. Open the notebooks in Google Colab, in order (`notebooks/01_...` onward)
-2. Install the data library: `pip install nflreadpy`
+Notebooks run locally in **VS Code** (Jupyter notebooks), Python 3.10+.
+
+1. Install [VS Code](https://code.visualstudio.com/) with the **Python** and **Jupyter** extensions
+2. From the repo folder, create a virtual environment and install the packages:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate        # Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. Open a notebook in VS Code, pick the `.venv` kernel (top right), and run the notebooks in order (`notebooks/01_...` onward)
