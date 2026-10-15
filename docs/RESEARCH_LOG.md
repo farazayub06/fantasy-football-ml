@@ -11,7 +11,17 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Starting hypothesis
 
-*(Write this in Phase 0, before seeing any results.)*
+*Written 2026-10-15, before any models were trained.*
+
+- **H1 (main):** A gradient boosting model using usage, matchup and Vegas features will have lower MAE than the last-3-week-average baseline on the 2025 test season, for every position.
+  - *Null:* the model's MAE is no better than the baseline's.
+  - *Test:* `reports/tables/model_comparison.csv` (checkpoint 3), reported in points and percent.
+- **H2 (features):** Usage features (target share, snap %, carries, air yards share) will matter more than touchdowns or efficiency stats, because a player's role is more stable week to week than his touchdowns.
+  - *Test:* feature importance (checkpoint 5).
+- **H3 (by position):** WR/TE: target share and air yards matter most. RB: carries, snap % and implied team total. QB: implied team total and EPA per attempt.
+  - *Test:* per-position feature importance panels (checkpoint 5).
+- **H4 (failures):** The largest errors will be in weeks 1–3 (little history), multi-touchdown games, and weeks when a teammate at the same position is injured.
+  - *Test:* error analysis by week and the weekly "biggest misses" log (checkpoints 4–5).
 
 - 
 
