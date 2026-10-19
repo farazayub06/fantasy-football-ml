@@ -1,0 +1,8 @@
+# nflreadypy data dictionary for snap counts
+https://nflreadr.nflverse.com/articles/dictionary_snap_counts.html
+
+# nflreadypy data dictionary for player stats
+https://nflreadr.nflverse.com/articles/dictionary_player_stats.html
+
+# nflreadypy data dictionary for players
+https://nflreadr.nflverse.com/articles/dictionary_players.html
