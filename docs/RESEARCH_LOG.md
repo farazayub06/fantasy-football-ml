@@ -137,3 +137,27 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 **Next step:**
 - Download 2020-2025 weekly stats, schedules and snap counts
+
+### 2026-10-29 · Faraz · Phase 1
+
+**What I did:**
+- Created `notebooks/02_clean_data.ipynb`: loads the raw files, cleans player stats, merges in snap counts and schedules
+- Saved the combined table to `data/processed/player_weeks_clean.parquet` (gitignored)
+
+**Numbers / results:**
+- 119,897 raw rows → **37,313** QB/RB/WR/TE regular-season player-weeks (WR 15,606 · RB 9,764 · TE 7,800 · QB 4,143)
+- Snap merge: 185 snap rows had no GSIS ID match; **38 player-weeks (0.1%) have no snap data**
+- Schedule merge: 0 rows missing Vegas lines; home share 0.50 (team abbreviations match)
+- Final table: 37,313 rows × 161 columns, with new columns `is_home`, `rest_days`, `implied_total`
+
+**What surprised me:**
+- The ID translation worked almost perfectly; only 0.1% of player-weeks are missing snap %
+
+**Problems or open questions:**
+- Decide at modeling time whether to drop or fill the 38 rows with no snap %
+
+**Saved for the poster:**
+- Row counts for the Data section table (above)
+
+**Next step:**
+- Exploration notebook: points by position, last week vs this week correlation, leakage columns

@@ -35,4 +35,14 @@ Every important choice, why you made it, and what else you considered. Judges at
 
 ### (to decide) · Train/test split
 ### (to decide) · Handling early-season weeks with little history
-### (to decide) · Handling missing snap counts
+### 2026-10-29 · Regular season only · Faraz
+
+**Decision:** Keep only regular-season games; drop playoffs.
+**Why:** Fantasy football is scored on the regular season, and playoff games include only some teams.
+**Alternatives considered:** Keeping playoffs as extra training data.
+
+### 2026-10-29 · Missing snap counts · Faraz
+
+**Decision:** Leave the 38 player-weeks (0.1%) with no snap data blank for now; decide at modeling time.
+**Why:** Too few to affect results; some models handle blanks on their own.
+**Alternatives considered:** Dropping those rows; filling with the player's average snap %.
