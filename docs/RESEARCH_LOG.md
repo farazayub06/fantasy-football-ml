@@ -63,6 +63,91 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-10-29 · Faraz · Phase 2 (features)
+
+**What I did:**
+- Created `notebooks/04_features.ipynb` and saved feature set v1 to `data/processed/features.parquet` (gitignored)
+- 13 features: 3-game averages of PPR points, targets, receptions, carries, snap %; 3-game averages of target share, air yards share, WOPR, carry share; opponent PPR allowed to the position (earlier weeks this season); implied team total, home/away, rest days
+
+**Numbers / results:**
+- Leakage test passed: checked Justin Jefferson 2020 by hand; each week's feature uses only earlier games (week 6: scored 39.6, feature = 16.7 from weeks 3-5)
+- 4,141 rows (each player's first game of a season) have no history → blank `_last3` features
+- Opponent PPR allowed per game, all players at the position combined: QB 16.9 · RB 22.3 · WR 34.1 · TE 12.2
+
+**What surprised me:**
+- Early-season opponent averages are extreme (WR range 6 to 79) because they're based on 1-2 games
+
+**Problems or open questions:**
+- How to handle week-1 rows with no history (drop, or fill with last season's averages)
+- Vegas lines, home/away and rest days are known before kickoff, so they need no lagging
+
+**Saved for the poster:**
+- Feature list (above) for the Methods section
+
+**Next step:**
+- Train baselines and a first model (Phase 3)
+
+### 2026-10-29 · Faraz · Phase 1
+
+**What I did:**
+- Created `notebooks/02_clean_data.ipynb`: loads the raw files, cleans player stats, merges in snap counts and schedules
+- Saved the combined table to `data/processed/player_weeks_clean.parquet` (gitignored)
+
+**Numbers / results:**
+- 119,897 raw rows → **37,313** QB/RB/WR/TE regular-season player-weeks (WR 15,606 · RB 9,764 · TE 7,800 · QB 4,143)
+- Snap merge: 185 snap rows had no GSIS ID match; **38 player-weeks (0.1%) have no snap data**
+- Schedule merge: 0 rows missing Vegas lines; home share 0.50 (team abbreviations match)
+- Final table: 37,313 rows × 161 columns, with new columns `is_home`, `rest_days`, `implied_total`
+
+**What surprised me:**
+- The ID translation worked almost perfectly; only 0.1% of player-weeks are missing snap %
+
+**Problems or open questions:**
+- Decide at modeling time whether to drop or fill the 38 rows with no snap %
+
+**Saved for the poster:**
+- Row counts for the Data section table (above)
+
+**Next step:**
+- Exploration notebook: points by position, last week vs this week correlation, leakage columns
+
+### 2026-10-29 · Faraz · Phase 1 (exploration)
+
+**What I did:**
+- Created `notebooks/03_exploration.ipynb` using the clean table (37,313 player-weeks)
+- Summarized PPR points by position and made a box plot
+- Measured how well last week's points predict this week's, by position
+- Checked same-week stats for target leakage
+
+**Numbers / results:**
+- Average PPR points per game: QB 13.9 · RB 7.8 · WR 7.4 · TE 5.5
+- Spread (std): QB 9.2 · RB 8.0 · WR 7.8 · TE 6.0
+- 25% of RB/WR/TE games score 1.4 points or less (lots of backups with tiny roles)
+- Highest single games: WR 57.9 · RB 56.2 · QB 51.9 · TE 45.6
+- Last-week correlation (within season): QB 0.40 · RB 0.50 · WR 0.44 · TE 0.40 · all 0.50
+
+**What surprised me:**
+- QBs are the LEAST predictable from last week (0.40), even though they score the most
+- RBs are the most predictable (0.50), likely because workload (carries, snaps) is steady
+- Pooling all positions inflates correlations (all = 0.50) and can flip signs: interceptions correlate +0.13 with points only because QBs throw them and QBs score more. Always report by position.
+
+**Key insight:**
+- A player's role drives his points: WR1s outscore WR3s, starting QBs outscore backups. Past snap % and target share show the role a player has had; depth charts show role changes before they happen (e.g. a backup moving up after an injury). Role features should be the core of the model.
+
+**Leakage:**
+- All same-week stats are leakage because fantasy points are calculated from them: `fantasy_points` (0.96), same-week snaps (0.63), receiving yards (0.59), receptions (0.58), targets (0.50), etc. Only past values (last week, 3-week averages) can be features.
+
+**Problems or open questions:**
+- Should we filter out low-role players (e.g. under ~25% snap share) or report them separately?
+- Depth charts must be the version known before each game, to avoid leakage
+
+**Saved for the poster:**
+- `reports/figures/ppr_by_position.png`
+- Last-week correlation table (above)
+
+**Next step:**
+- Feature engineering: 3-week averages of points, targets, snap %, carries
+
 ### 2026-10-16 · Preston · Phase 1
 
 **What I did:**
@@ -138,63 +223,3 @@ Both partners add an entry at the end of **every** work session, newest at the t
 **Next step:**
 - Download 2020-2025 weekly stats, schedules and snap counts
 
-### 2026-10-29 · Faraz · Phase 1
-
-**What I did:**
-- Created `notebooks/02_clean_data.ipynb`: loads the raw files, cleans player stats, merges in snap counts and schedules
-- Saved the combined table to `data/processed/player_weeks_clean.parquet` (gitignored)
-
-**Numbers / results:**
-- 119,897 raw rows → **37,313** QB/RB/WR/TE regular-season player-weeks (WR 15,606 · RB 9,764 · TE 7,800 · QB 4,143)
-- Snap merge: 185 snap rows had no GSIS ID match; **38 player-weeks (0.1%) have no snap data**
-- Schedule merge: 0 rows missing Vegas lines; home share 0.50 (team abbreviations match)
-- Final table: 37,313 rows × 161 columns, with new columns `is_home`, `rest_days`, `implied_total`
-
-**What surprised me:**
-- The ID translation worked almost perfectly; only 0.1% of player-weeks are missing snap %
-
-**Problems or open questions:**
-- Decide at modeling time whether to drop or fill the 38 rows with no snap %
-
-**Saved for the poster:**
-- Row counts for the Data section table (above)
-
-**Next step:**
-- Exploration notebook: points by position, last week vs this week correlation, leakage columns
-
-### 2026-10-29 · Faraz · Phase 1 (exploration)
-
-**What I did:**
-- Created `notebooks/03_exploration.ipynb` using the clean table (37,313 player-weeks)
-- Summarized PPR points by position and made a box plot
-- Measured how well last week's points predict this week's, by position
-- Checked same-week stats for target leakage
-
-**Numbers / results:**
-- Average PPR points per game: QB 13.9 · RB 7.8 · WR 7.4 · TE 5.5
-- Spread (std): QB 9.2 · RB 8.0 · WR 7.8 · TE 6.0
-- 25% of RB/WR/TE games score 1.4 points or less (lots of backups with tiny roles)
-- Highest single games: WR 57.9 · RB 56.2 · QB 51.9 · TE 45.6
-- Last-week correlation (within season): QB 0.40 · RB 0.50 · WR 0.44 · TE 0.40 · all 0.50
-
-**What surprised me:**
-- QBs are the LEAST predictable from last week (0.40), even though they score the most
-- RBs are the most predictable (0.50), likely because workload (carries, snaps) is steady
-- Pooling all positions inflates correlations (all = 0.50) and can flip signs: interceptions correlate +0.13 with points only because QBs throw them and QBs score more. Always report by position.
-
-**Key insight:**
-- A player's role drives his points: WR1s outscore WR3s, starting QBs outscore backups. Past snap % and target share show the role a player has had; depth charts show role changes before they happen (e.g. a backup moving up after an injury). Role features should be the core of the model.
-
-**Leakage:**
-- All same-week stats are leakage because fantasy points are calculated from them: `fantasy_points` (0.96), same-week snaps (0.63), receiving yards (0.59), receptions (0.58), targets (0.50), etc. Only past values (last week, 3-week averages) can be features.
-
-**Problems or open questions:**
-- Should we filter out low-role players (e.g. under ~25% snap share) or report them separately?
-- Depth charts must be the version known before each game, to avoid leakage
-
-**Saved for the poster:**
-- `reports/figures/ppr_by_position.png`
-- Last-week correlation table (above)
-
-**Next step:**
-- Feature engineering: 3-week averages of points, targets, snap %, carries
