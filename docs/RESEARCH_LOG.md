@@ -161,3 +161,40 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 **Next step:**
 - Exploration notebook: points by position, last week vs this week correlation, leakage columns
+
+### 2026-10-29 · Faraz · Phase 1 (exploration)
+
+**What I did:**
+- Created `notebooks/03_exploration.ipynb` using the clean table (37,313 player-weeks)
+- Summarized PPR points by position and made a box plot
+- Measured how well last week's points predict this week's, by position
+- Checked same-week stats for target leakage
+
+**Numbers / results:**
+- Average PPR points per game: QB 13.9 · RB 7.8 · WR 7.4 · TE 5.5
+- Spread (std): QB 9.2 · RB 8.0 · WR 7.8 · TE 6.0
+- 25% of RB/WR/TE games score 1.4 points or less (lots of backups with tiny roles)
+- Highest single games: WR 57.9 · RB 56.2 · QB 51.9 · TE 45.6
+- Last-week correlation (within season): QB 0.40 · RB 0.50 · WR 0.44 · TE 0.40 · all 0.50
+
+**What surprised me:**
+- QBs are the LEAST predictable from last week (0.40), even though they score the most
+- RBs are the most predictable (0.50), likely because workload (carries, snaps) is steady
+- Pooling all positions inflates correlations (all = 0.50) and can flip signs: interceptions correlate +0.13 with points only because QBs throw them and QBs score more. Always report by position.
+
+**Key insight:**
+- A player's role drives his points: WR1s outscore WR3s, starting QBs outscore backups. Past snap % and target share show the role a player has had; depth charts show role changes before they happen (e.g. a backup moving up after an injury). Role features should be the core of the model.
+
+**Leakage:**
+- All same-week stats are leakage because fantasy points are calculated from them: `fantasy_points` (0.96), same-week snaps (0.63), receiving yards (0.59), receptions (0.58), targets (0.50), etc. Only past values (last week, 3-week averages) can be features.
+
+**Problems or open questions:**
+- Should we filter out low-role players (e.g. under ~25% snap share) or report them separately?
+- Depth charts must be the version known before each game, to avoid leakage
+
+**Saved for the poster:**
+- `reports/figures/ppr_by_position.png`
+- Last-week correlation table (above)
+
+**Next step:**
+- Feature engineering: 3-week averages of points, targets, snap %, carries
