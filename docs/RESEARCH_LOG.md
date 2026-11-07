@@ -63,6 +63,38 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-10-29 · Preston · Phase 2 (Things to consider)
+
+**What I did:**
+- Did a run through of our code base to see where things stand. Before progressing to phase 3. 
+
+**Where things stand:**
+- In phase 1 we loaded and cleaned the data, filtered it to the positions we wanted, and merged player id's and snap counts. Then we explored the data and founds correlations between a players previous week points and the amount of points they had the next week =. 
+
+- In phase 2 we built 13 features using 3-game averages, an opponent features and game context. The leakage test also passed.
+
+**What surprised me:**
+- We still need to add some more features, but at the same time we dont want to over parameterize the model.
+
+- We need to save some of the new computed metrics into parquet files.
+
+- Roadmap features stil missing: season-to-date average, efficiency stats (catch rate, yards per catch, yards per carry), team pass attempts and game total.
+
+**Problems or open questions:**
+- Train/test split: still “to decide”.
+
+- Early weeks: history resets every season, which is why 11% of rows are blank. One option is to carry over last season’s averages, however this can't be done for rookies.
+
+- Which players get scored: decide this before Phase 3. A quarter of RB/WR/TE games score 1.4 points or less. Those backups are easy to predict, so they make every model’s MAE look good. Either score only real-role players (e.g. last-3 snap % ≥ 25%) or report both groups.
+
+**Housekeeping:**
+- DATA_DICTIONARY.md still lists only 1 column.
+
+- No ROADMAP.md boxes are ticked.
+
+- The checkpoint 1 table and the last-week scatter plot aren’t saved in reports/.
+
+
 ### 2026-10-29 · Faraz · Phase 2 (features)
 
 **What I did:**
