@@ -46,3 +46,20 @@ Every important choice, why you made it, and what else you considered. Judges at
 **Decision:** Leave the 38 player-weeks (0.1%) with no snap data blank for now; decide at modeling time.
 **Why:** Too few to affect results; some models handle blanks on their own.
 **Alternatives considered:** Dropping those rows; filling with the player's average snap %.
+
+### 2026-11-16 · QB efficiency: EPA per attempt instead of total EPA · Preston
+
+**Decision:** Replace `passing_epa_last3` (average total EPA over the last 3 games) with `epa_per_att_last3` = total passing EPA over the last 3 games ÷ total pass attempts over those games. Leave it blank when the player has fewer than 20 attempts in those games.
+
+**Why:**
+- Total EPA mixes volume (how many passes) with efficiency (how good each pass was). Volume is already covered by `attempts_last3`, so per-attempt EPA gives the model a clean efficiency signal instead of repeating volume.
+- Sums are divided instead of averaging each game's EPA/attempt, so a 3-attempt game doesn't count as much as a 40-attempt game.
+- The 20-attempt cutoff removes tiny samples (e.g. a backup going 2-for-3 with one long completion), which produce extreme, meaningless values. 20 attempts is less than one full start, so starting QBs always qualify.
+
+**Alternatives considered:**
+- Keep total EPA: simpler, but confuses volume with efficiency.
+- Keep both: the two are strongly related, so the model would split importance between them and the feature-importance chart would be harder to read.
+- Average per-game EPA/attempt: lets low-attempt games swing the value.
+- Different cutoff (10 or 30 attempts): 20 chosen as a middle ground; can revisit if results are sensitive to it.
+
+**Effect on results (if measured):** Not measured yet. Compare QB MAE with total EPA vs. EPA per attempt in Phase 3.

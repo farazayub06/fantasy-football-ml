@@ -63,6 +63,36 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-11-16 · Preston · Phase 2 (features v2)
+
+**What I did:**
+- Replaced total EPA with EPA per attempt over the last 3 games (`epa_per_att_last3`): sum of EPA ÷ sum of attempts; blank under 20 attempts (see DECISIONS.md)
+- Added history features: last game's points (`fantasy_points_ppr_last1`, needed for Baseline 1) and season-to-date average (`fantasy_points_ppr_season`)
+- Added efficiency features over the last 3 games: catch rate, yards per catch, yards per carry (sum ÷ sum, blank when nothing to divide by)
+- Added team pass attempts per game (`team_att_avg`, earlier games this season only) and the Vegas game total (`total_line`)
+- Reorganized `feature_cols` into groups: history, usage, role, passing, efficiency, team/opponent, game context
+- Feature set v2: 26 features, saved to `data/processed/features.parquet`
+
+**Numbers / results:**
+- `epa_per_att_last3` for QBs: mean ___, range ___ to ___; ___% blank overall (only passers have it)
+- Leakage check (Justin Jefferson, 2020 week 6): last1 = ___ (week 5 score 5.3), last3 = ___ (16.7), season = ___ (12.4)
+- `team_att_avg`: mean ___ pass attempts per game
+- Blank share for most features: ___ (first game of each season has no history)
+
+**What surprised me:**
+- ___
+
+**Problems or open questions:**
+- Linear regression can't use blank values; fill them (e.g. EPA per attempt → 0) before Phase 3
+- Still to decide with Faraz: early-season weeks with no history; whether to score only real-role players
+- A backup QB who suddenly starts has almost no history, so expect big misses there (H4)
+
+**Saved for the poster:**
+- Feature list by group (for the checkpoint 2 feature table)
+
+**Next step:**
+- Decide the open questions at the weekly sync, then start baselines and first models (Phase 3)
+
 ### 2026-10-29 · Preston · Phase 2 (Things to consider)
 
 **What I did:**

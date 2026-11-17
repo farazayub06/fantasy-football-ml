@@ -34,20 +34,20 @@ Write these on the first page of the research log. Every phase answers part of t
 ## Phase 0: Setup (Week 1 · Oct 12-18)
 
 **Both together**
-- [ ] Create the GitHub repo `fantasy-football-ml` and add each other as collaborators
-- [ ] Copy in this file, `docs/RESEARCH_LOG.md`, `docs/POSTER_EVIDENCE.md` and `docs/DECISIONS.md`
-- [ ] Set up the folder structure (bottom of this file)
-- [ ] Agree on a weekly sync time (30 min) and a rule: **every work session ends with a commit and a research log entry**
-- [ ] Write the research questions into the research log
+- [x] Create the GitHub repo `fantasy-football-ml` and add each other as collaborators
+- [x] Copy in this file, `docs/RESEARCH_LOG.md`, `docs/POSTER_EVIDENCE.md` and `docs/DECISIONS.md`
+- [x] Set up the folder structure (bottom of this file)
+- [x] Agree on a weekly sync time (30 min) and a rule: **every work session ends with a commit and a research log entry**
+- [x] Write the research questions into the research log
 
 **Partner A**
-- [ ] Set up VS Code with the Python and Jupyter extensions, clone the repo, create a `.venv` and `pip install -r requirements.txt` (steps in `README.md`)
-- [ ] Test loading data with `nflreadpy` (`pip install nflreadpy`, then `.to_pandas()` on results)
+- [x] Set up VS Code with the Python and Jupyter extensions, clone the repo, create a `.venv` and `pip install -r requirements.txt` (steps in `README.md`)
+- [x] Test loading data with `nflreadpy` (`pip install nflreadpy`, then `.to_pandas()` on results)
 
 **Partner B**
-- [ ] Write the first version of `README.md`: one paragraph on the project, the research questions, how to run it
-- [ ] Add a `.gitignore` that excludes `data/raw/` and `.venv/` (large files don't belong in Git)
-- [ ] Do the same VS Code setup as Partner A, and add any new package you use to `requirements.txt`
+- [x] Write the first version of `README.md`: one paragraph on the project, the research questions, how to run it
+- [x] Add a `.gitignore` that excludes `data/raw/` and `.venv/` (large files don't belong in Git)
+- [x] Do the same VS Code setup as Partner A, and add any new package you use to `requirements.txt`
 
 > 🔬 **Research checkpoint 0: Starting point**
 > - Log entry: why you chose this project, what you expect to find, your current ML experience
@@ -58,17 +58,17 @@ Write these on the first page of the research log. Every phase answers part of t
 ## Phase 1: Data collection & exploration (Weeks 1-2 · Oct 12-25)
 
 **Partner A**
-- [ ] Download weekly player stats for **2020-2026** (`stats_player_week`)
-- [ ] Download **schedules** (one file) and **snap_counts** for 2020-2026
-- [ ] Combine all seasons into one table; filter to QB, RB, WR, TE
-- [ ] Remove junk rows (blank `player_id`: one appears per week)
-- [ ] Write `data/DATA_DICTIONARY.md`: every column you keep, what it means, where it came from
+- [x] Download weekly player stats for **2020-2026** (`stats_player_week`)
+- [x] Download **schedules** (one file) and **snap_counts** for 2020-2026
+- [x] Combine all seasons into one table; filter to QB, RB, WR, TE
+- [x] Remove junk rows (blank `player_id`: one appears per week)
+- [x] Write `data/DATA_DICTIONARY.md`: every column you keep, what it means, where it came from
 
 **Partner B**
-- [ ] Explore the combined data in `notebooks/02_exploration.ipynb`: `shape`, `info()`, `isnull().sum()`, `duplicated().sum()`, `value_counts()`
-- [ ] Plot the distribution of weekly PPR points by position
-- [ ] Measure how well last week predicts this week (correlation by position; an early half-PPR check on 2026 weeks 1-4 gave about **0.5** overall)
-- [ ] List every column that would cause **target leakage** (same-week stats)
+- [x] Explore the combined data in `notebooks/02_exploration.ipynb`: `shape`, `info()`, `isnull().sum()`, `duplicated().sum()`, `value_counts()`
+- [x] Plot the distribution of weekly PPR points by position
+- [x] Measure how well last week predicts this week (correlation by position; an early half-PPR check on 2026 weeks 1-4 gave about **0.5** overall)
+- [x] List every column that would cause **target leakage** (same-week stats)
 
 > 🔬 **Research checkpoint 1: The data**
 > Save to `reports/figures/` and `reports/tables/`, then log it:
@@ -85,13 +85,13 @@ Write these on the first page of the research log. Every phase answers part of t
 ## Phase 2: Feature engineering (Weeks 3-4 · Oct 26-Nov 8)
 
 **Partner A** builds every feature in `src/features/build_features.py`. **Every feature uses previous weeks only.**
-- [ ] History: PPR points, last-3-week average and season-to-date average
-- [ ] Usage: targets, receptions, carries, target share, rush share, snap %
-- [ ] Opportunity: air yards share, WOPR
-- [ ] Efficiency: catch rate, yards per catch, yards per carry, QB EPA per attempt
+- [x] History: PPR points, last-3-week average and season-to-date average
+- [x] Usage: targets, receptions, carries, target share, rush share, snap %
+- [x] Opportunity: air yards share, WOPR
+- [x] Efficiency: catch rate, yards per catch, yards per carry, QB EPA per attempt
 - [ ] Opponent: PPR points and yards allowed to each position (season to date, before this week)
-- [ ] Game context: home/away, rest days, game total, implied team total (from schedules)
-- [ ] Team: team pass attempts per game
+- [x] Game context: home/away, rest days, game total, implied team total (from schedules)
+- [x] Team: team pass attempts per game
 - [ ] Save the final table to `data/processed/features.csv`
 
 **Partner B**
