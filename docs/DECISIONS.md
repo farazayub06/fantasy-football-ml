@@ -63,3 +63,31 @@ Every important choice, why you made it, and what else you considered. Judges at
 - Different cutoff (10 or 30 attempts): 20 chosen as a middle ground; can revisit if results are sensitive to it.
 
 **Effect on results (if measured):** Not measured yet. Compare QB MAE with total EPA vs. EPA per attempt in Phase 3.
+
+### 2026-11-19 · Train/test split · Preston
+
+**Decision:** Split by season: train 2020-2024, test 2025, live predictions 2026. The 2025 test set is scored once, after models are chosen. For tuning, train on 2020-2023 and validate on 2024. Before live predictions, retrain on 2020-2025; the reported benchmark stays the 2025 test score.
+
+**Why:** A random split lets the model learn from games after the ones it's tested on (leakage) and doesn't match real use, where only the past is known. Tuning on 2025 would make the test score too optimistic.
+
+**Alternatives considered:** Random 80/20 split (leaks future data); rolling week-by-week evaluation (more realistic but more work; possible later).
+
+### 2026-11-19 · Which players are scored · Preston
+
+**Decision:** Report MAE for (1) all players and (2) real-role players, defined as `offense_pct_last3` ≥ 0.25. Real-role MAE is the headline number.
+**Why:** About a quarter of RB/WR/TE games are backups scoring ~1 point, which are easy to predict and make every model look better. Real-role players are the ones fantasy managers actually decide between. The filter uses past snap %, so it's known before the game (no leakage).
+**Alternatives considered:** All players only (flattering); this week's snap % as the filter (leakage); a fantasy-points threshold (also uses information not known before the game).
+**Effect on results:** Rows kept per split: ___ (from the check cell).
+
+### 2026-11-19 · Early-season rows with no history · Preston
+
+**Decision:** Drop each player's first game played in each season (no `last1`/`last3`/`season` values) from training and scoring. Tag every row with `history_flag`:
+- `ok`: has history
+- `season_opener`: first game was the team's first game
+- `limitation_returning`: first game came later, player appeared in an earlier season (injury return, suspension, backup's first stat)
+- `limitation_new`: first game came later, never seen before (rookie or new player)
+
+**Why:** Baselines can't predict rows with no history either, so dropping them keeps every model graded on the same games. Tagging late starters separately lets us count them and list them as a limitation instead of hiding them. In live predictions they appear with a blank prediction and their tag.
+**Caveats:** 2020 has no earlier season in our data, so all 2020 late starters are tagged `limitation_new`. "Late start" includes backups whose first recorded stat came after week 1.
+**Alternatives considered:** Fill with last season's averages (no help for rookies; possible future improvement); leave blanks for gradient boosting (unfair comparison with baselines and linear regression).
+**Effect on results:** Rows per tag per season: ___ (from the count cell).

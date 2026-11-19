@@ -252,10 +252,10 @@ fantasy-football-ml/
 │   └── DATA_DICTIONARY.md
 ├── notebooks/
 │   ├── 01_load_data.ipynb
-│   ├── 02_exploration.ipynb
-│   ├── 03_features.ipynb
-│   ├── 04_baselines.ipynb
-│   ├── 05_models.ipynb
+│   ├── 02_clean_data.ipynb
+│   ├── 03_exploration.ipynb
+│   ├── 04_features.ipynb
+│   ├── 05_baselines_models.ipynb
 │   ├── 06_feature_importance.ipynb
 │   └── 07_error_analysis.ipynb
 ├── src/
