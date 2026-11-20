@@ -92,12 +92,12 @@ Write these on the first page of the research log. Every phase answers part of t
 - [ ] Opponent: PPR points and yards allowed to each position (season to date, before this week)
 - [x] Game context: home/away, rest days, game total, implied team total (from schedules)
 - [x] Team: team pass attempts per game
-- [ ] Save the final table to `data/processed/features.csv`
+- [x] Save the final table to `data/processed/features.parquet` (Parquet instead of CSV: faster, keeps column types)
 
 **Partner B**
-- [ ] Write a **leakage test**: for a few players, check by hand that each feature only uses earlier weeks
-- [ ] Decide how to handle early-season weeks with little history (e.g. drop weeks 1-2, or fill with last season's averages); record it in `docs/DECISIONS.md`
-- [ ] Set up the train/test split: **train 2020-2024, test 2025, live 2026**. Never a random split.
+- [x] Write a **leakage test**: for a few players, check by hand that each feature only uses earlier weeks
+- [x] Decide how to handle early-season weeks with little history (e.g. drop weeks 1-2, or fill with last season's averages); record it in `docs/DECISIONS.md`
+- [x] Set up the train/test split: **train 2020-2024, test 2025, live 2026**. Never a random split.
 
 > 🔬 **Research checkpoint 2: Features**
 > - **Table:** every feature, its group, its formula, and which positions use it (this becomes a poster table)
@@ -112,12 +112,12 @@ Write these on the first page of the research log. Every phase answers part of t
 ## Phase 3: Baselines & first models (Weeks 5-6 · Nov 9-22)
 
 **Partner B**
-- [ ] Baseline 1: **last week's points**
-- [ ] Baseline 2: **last-3-week average**
-- [ ] Model 1: linear regression
-- [ ] Model 2: random forest or gradient boosting (e.g. `HistGradientBoostingRegressor`)
-- [ ] Score all four on the 2025 test season with **MAE** (average points missed), by position
-- [ ] Save the results to `reports/tables/model_comparison.csv`
+- [x] Baseline 1: **last week's points**
+- [x] Baseline 2: **last-3-week average**
+- [x] Model 1: linear regression
+- [x] Model 2: random forest or gradient boosting (e.g. `HistGradientBoostingRegressor`)
+- [x] Score all four on the 2025 test season with **MAE** (average points missed), by position
+- [x] Save the results to `reports/tables/model_comparison.csv`
 
 **Partner A**
 - [ ] Fix any data problems Partner B finds
