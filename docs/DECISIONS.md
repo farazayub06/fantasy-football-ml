@@ -33,8 +33,8 @@ Every important choice, why you made it, and what else you considered. Judges at
 **Why:** Notebooks live in the repo and are committed with normal Git; no re-installing packages every session; same package versions for both partners.
 **Alternatives considered:** Google Colab (free GPU we don't need, but packages reset each session and syncing notebooks back to GitHub is clumsy).
 
-### (to decide) · Train/test split
-### (to decide) · Handling early-season weeks with little history
+### (to decide --> Done - 11/20) · Train/test split
+### (to decide --> Done - 11/20) · Handling early-season weeks with little history
 ### 2026-10-29 · Regular season only · Faraz
 
 **Decision:** Keep only regular-season games; drop playoffs.
@@ -91,3 +91,10 @@ Every important choice, why you made it, and what else you considered. Judges at
 **Caveats:** 2020 has no earlier season in our data, so all 2020 late starters are tagged `limitation_new`. "Late start" includes backups whose first recorded stat came after week 1.
 **Alternatives considered:** Fill with last season's averages (no help for rookies; possible future improvement); leave blanks for gradient boosting (unfair comparison with baselines and linear regression).
 **Effect on results:** Rows per tag per season: ___ (from the count cell).
+
+### 2026-11-20 · Final model: linear regression · Preston
+
+**Decision:** Use linear regression (one model per position; blanks filled with the training median plus missing-value flags) as the main model for live 2026 predictions.
+**Why:** Chosen on the 2024 validation season (trained on 2020-2023, real-role players): linear regression beat default gradient boosting at every position (MAE QB 6.27 vs 6.58, RB 5.49 vs 5.55, TE 3.86 vs 3.97, WR 5.22 vs 5.27). The 2025 test confirms it: linear was best in every row and beat the last-3 baseline by 7.1-9.9% on real-role players. It's also simpler and easier to explain.
+**Alternatives considered:** Default gradient boosting (close for RB/WR, worse for QB); tuned gradient boosting not yet tried (planned for Phase 5, tuned on 2024 only).
+**Effect on results:** Real-role MAE, 2025 test: linear 5.11 vs baseline 5.55 (7.9% better).
