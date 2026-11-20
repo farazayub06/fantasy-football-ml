@@ -63,6 +63,38 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-11-20 · Preston · Phase 3 (baselines and models)
+
+**What I did:**
+- Created `notebooks/05_baselines_models.ipynb`: dropped first games of each season (`history_flag == "ok"`), split by season (train 2020-2024, test 2025), scored all models with one function on the same rows
+- Baselines: last game's points; last-3-game average
+- Models (one per position): linear regression (median fill + missing flags), gradient boosting (default settings)
+- Checked model choice on 2024 (trained on 2020-2023) before trusting the 2025 result
+- Saved `reports/tables/model_comparison.csv`, `model_comparison_wide.csv`, `reports/figures/mae_by_position.png`
+
+**Numbers / results (2025 test, MAE in PPR points, real-role players):**
+- Baseline 1 (last game) 6.55 · Baseline 2 (last 3) 5.55 · Gradient boosting 5.21 · **Linear regression 5.11**
+- Linear vs Baseline 2: QB 7.38 → 6.65 (−9.9%) · RB 6.27 → 5.78 (−7.8%) · WR 5.39 → 5.01 (−7.1%) · TE 4.26 → 3.91 (−8.2%) · ALL −7.9%
+- All players: Baseline 2 4.72 → linear 4.44
+- 2024 check (real-role): linear beat boosting at every position (QB 6.27 vs 6.58, RB 5.49 vs 5.55, TE 3.86 vs 3.97, WR 5.22 vs 5.27)
+
+**What surprised me:**
+- Linear regression beat gradient boosting everywhere; most of the signal is simple and additive
+- QBs improved the most (−9.9%), possibly from the passing / EPA-per-attempt features
+- Averaging 3 games beats last game alone by about 15%
+
+**Problems or open questions:**
+- Gradient boosting was untuned; tuning on 2024 could close the gap (Phase 5 improvement)
+- Gains are modest (~8%) because fantasy points are noisy; check that the gain isn't luck (how often the model beats the baseline on the same game)
+- Gradient boosting crashed on features that are 100% blank for a position (EPA/att for non-QBs); fixed by skipping those columns per position
+
+**Saved for the poster:**
+- `reports/tables/model_comparison_wide.csv` (main results table)
+- `reports/figures/mae_by_position.png` (Results figure)
+
+**Next step:**
+- Gate passed (model beats Baseline 2 at every position): retrain on 2020-2025 and start live predictions (Phase 4)
+
 ### 2026-11-16 · Preston · Phase 2 (features v2)
 
 **What I did:**
@@ -74,10 +106,9 @@ Both partners add an entry at the end of **every** work session, newest at the t
 - Feature set v2: 26 features, saved to `data/processed/features.parquet`
 
 **Numbers / results:**
-- `epa_per_att_last3` for QBs: mean ___, range ___ to ___; ___% blank overall (only passers have it)
-- Leakage check (Justin Jefferson, 2020 week 6): last1 = ___ (week 5 score 5.3), last3 = ___ (16.7), season = ___ (12.4)
-- `team_att_avg`: mean ___ pass attempts per game
-- Blank share for most features: ___ (first game of each season has no history)
+- `epa_per_att_last3` for QBs: mean 0.037, range -1.655 to 0.851;
+- Leakage check (Justin Jefferson, 2020 week 6): last1 = 5.3 (week 5 score 5.3), last3 = 16.7 , season = 12.4 
+- `team_att_avg`: mean 33.7 pass attempts per game
 
 **What surprised me:**
 - ___
