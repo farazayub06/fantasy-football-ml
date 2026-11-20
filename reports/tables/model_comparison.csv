@@ -1,0 +1,41 @@
+model,players,position,mae,n
+Baseline 1: last game,all,QB,8.040857632933104,583
+Baseline 1: last game,all,RB,5.47185393258427,1424
+Baseline 1: last game,all,WR,5.329383259911895,2270
+Baseline 1: last game,all,TE,4.674852173913044,1150
+Baseline 1: last game,all,ALL,5.519351391192187,5427
+Baseline 1: last game,real_role,QB,8.519692307692308,520
+Baseline 1: last game,real_role,RB,7.422136150234742,852
+Baseline 1: last game,real_role,WR,6.326304849884527,1732
+Baseline 1: last game,real_role,TE,5.138135764944276,987
+Baseline 1: last game,real_role,ALL,6.546663407479834,4091
+Baseline 2: last 3 avg,all,QB,6.987427101200686,583
+Baseline 2: last 3 avg,all,RB,4.695730337078652,1424
+Baseline 2: last 3 avg,all,WR,4.576143906020559,2270
+Baseline 2: last 3 avg,all,TE,3.8821101449275357,1150
+Baseline 2: last 3 avg,all,ALL,4.719488360665807,5427
+Baseline 2: last 3 avg,real_role,QB,7.376032051282052,520
+Baseline 2: last 3 avg,real_role,RB,6.270762910798123,852
+Baseline 2: last 3 avg,real_role,WR,5.3941512702078525,1732
+Baseline 2: last 3 avg,real_role,TE,4.255592705167174,987
+Baseline 2: last 3 avg,real_role,ALL,5.553939542084249,4091
+Linear regression,all,QB,6.436707886894879,583
+Linear regression,all,RB,4.494869531985627,1424
+Linear regression,all,WR,4.311801571580367,2270
+Linear regression,all,TE,3.62467459910147,1150
+Linear regression,all,ALL,4.4425023526923475,5427
+Linear regression,real_role,QB,6.652887682919198,520
+Linear regression,real_role,RB,5.78057898859555,852
+Linear regression,real_role,WR,5.007162238563954,1732
+Linear regression,real_role,TE,3.907672679818233,987
+Linear regression,real_role,ALL,5.112156642770656,4091
+Gradient boosting,all,QB,6.645395062601133,583
+Gradient boosting,all,RB,4.590064792480263,1424
+Gradient boosting,all,WR,4.368379600203701,2270
+Gradient boosting,all,TE,3.771183074041018,1150
+Gradient boosting,all,ALL,4.544610247576547,5427
+Gradient boosting,real_role,QB,6.929293963913364,520
+Gradient boosting,real_role,RB,5.877241230169325,852
+Gradient boosting,real_role,WR,5.026749015188262,1732
+Gradient boosting,real_role,TE,4.050693105598904,987
+Gradient boosting,real_role,ALL,5.210218963302714,4091
