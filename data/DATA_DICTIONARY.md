@@ -22,7 +22,7 @@ Full nflverse column definitions: [player stats](https://nflreadr.nflverse.com/a
 | File | Made by | One row per | Contents |
 |---|---|---|---|
 | `player_weeks_clean.parquet` | `02_clean_data` | QB/RB/WR/TE player per regular-season game | All 150 player-stat columns + snap counts + schedule columns (section 4) |
-| `features.parquet` | `04_features` | same rows | 8 identifiers + 26 features + target (section 3) |
+| `features.parquet` | `04_features` | same rows, plus one placeholder row per player for the next unplayed week | 9 identifiers + 26 features + target (section 3) |
 
 **Cleaning rules (notebook 02):** keep QB, RB, WR, TE only; regular season only (`season_type == "REG"`); drop rows with a blank `player_id` (junk rows). Snap counts are joined through `player_ids` (PFR ID → GSIS ID), then on `player_id` + `season` + `week`.
 
