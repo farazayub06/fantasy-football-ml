@@ -17,6 +17,29 @@ Replace "Partner A" and "Partner B" with your names. Both of you share the resea
 - `- [ ]` tasks are checkboxes. Tick them as you finish, or turn each phase into a GitHub Issue.
 - 🔬 **Research checkpoint** = stop and save evidence for the poster. Each one says exactly what to save and where.
 - Dates assume you start the week of **Oct 12, 2026** and work weekly. Shift them if your schedule differs.
+- **Updated Nov 25:** everything is due **Thu Dec 3**; the research gala is **Fri Dec 11**. Phases 4-8 now follow the final-stretch schedule below.
+
+---
+
+## Final-stretch schedule (updated Nov 25)
+
+**Evidence plan**
+- **Headline:** the 2025 test season. It was never used for tuning or choosing models (all of that was done on 2024), so it's an honest out-of-sample result.
+- **Live test:** week 12 of 2026 (made with feature set v2, committed before kickoff on Nov 25), scored Tue Dec 1. One week is a small sample, so it supports the 2025 result rather than replacing it.
+- **Gala:** a live demo of predictions for the upcoming week's games.
+
+| Date | Work | Phase |
+|---|---|---|
+| Wed 11/25 | Week 12 predictions committed before kickoff ✔; roadmap updated | 4 |
+| Thu 11/26 - Fri 11/27 | Feature importance per position (H2, H3); error analysis by position, week and player type, plus 2-3 player examples (H4) | 5 |
+| Fri 11/27 - Sat 11/28 | Improvements, decided on the 2024 check only: injury features (teammate out, vacated targets), red-zone share, tuned gradient boosting. Pick feature set v3 | 5 |
+| Sun 11/29 | **Freeze the model.** Rescore 2025 once with the final version; update the results table and figure. Start `src/` | 5 → 7 |
+| Mon 11/30 | Finish `src/` (pipeline reproduces `week_12.csv`). Missing poster items: seasons/rows table, last-week scatter, pipeline diagram | 7 |
+| Tue 12/1 | Score week 12 (live record + figure). Predict week 13 with the frozen model. Write poster sections | 4, 7 |
+| Wed 12/2 | Full poster draft; outside reader; README results; every `docs/POSTER_EVIDENCE.md` row filled | 7 |
+| **Thu 12/3** | **Final checks; submit everything** | 7 |
+| Fri 12/4 - Thu 12/10 | Pitch, walkthrough, Q&A prep, QR code. Score week 13 (around Tue 12/8). Commit week 14 predictions before Thu 12/10 for the live demo | 8 |
+| **Fri 12/11** | **Research gala** | 8 |
 
 ---
 
@@ -136,28 +159,28 @@ Write these on the first page of the research log. Every phase answers part of t
 
 ---
 
-## Phase 4: Live predictions (Week 7 to end of NFL regular season · Nov 23-Jan 3)
+## Phase 4: Live predictions (Nov 23-Dec 1 for the submission · live demo at the gala)
 
-Runs **every week** alongside Phases 5 and 6.
+Week 12 is the only week scored before the Dec 3 deadline. Keep predicting each upcoming week through the gala for the live demo.
 
 **Partner A (Monday night / Tuesday)**
 - [ ] Run the weekly pipeline after Monday Night Football
-- [ ] Commit the week's predictions to `predictions/2026/week_XX.csv` **before Thursday's game** (the commit timestamp proves you predicted in advance)
+- [x] Commit the week's predictions to `predictions/2026/week_XX.csv` **before Thursday's game** (the commit timestamp proves you predicted in advance) · week 12 committed Nov 25, 7:46 pm ET
 
 **Partner B (after the games)**
 - [ ] Score last week's predictions: MAE by position, model vs baseline
 - [ ] Add the week to `reports/tables/live_season_record.csv`
 - [ ] Note the 3 biggest misses and why they happened (injury? touchdown spike? blowout?)
 
-> 🔬 **Research checkpoint 4: Weekly live record** *(every week)*
+> 🔬 **Research checkpoint 4: Live record** *(week 12 by Tue Dec 1)*
 > - One research log line: week, model MAE, baseline MAE, biggest miss and its cause
-> - At the end of the season: **Figure:** model vs baseline MAE week by week (line chart)
+> - **Figure:** week 12 MAE by position, model vs baseline (bar chart). Say plainly that one week is a small sample; 2025 stays the headline
 >
-> *Poster use: "real-world test" figure, the most convincing evidence you have.*
+> *Poster use: "real-world test" figure. At the gala: live demo of predictions for the upcoming games.*
 
 ---
 
-## Phase 5: Analysis & improvement (Weeks 7-10 · Nov 23-Dec 20)
+## Phase 5: Analysis & improvement (Nov 26-29 · model frozen Sun Nov 29)
 
 **Partner B**
 - [ ] Feature importance for the best model, by position (permutation importance or SHAP)
@@ -178,9 +201,9 @@ Runs **every week** alongside Phases 5 and 6.
 
 ---
 
-## Phase 6 (optional stretch): Breakout detector (Weeks 10-12 · Dec 7-Jan 3)
+## Phase 6 (optional stretch): Breakout detector
 
-Only if Phases 3-5 are done.
+Only if Phases 3-5 are done by Sat Nov 28. Otherwise, list it as a future direction on the poster.
 
 **Partner A**
 - [ ] Define a breakout (e.g. 15+ PPR points from a player averaging under 8) and label past weeks
@@ -194,10 +217,10 @@ Only if Phases 3-5 are done.
 
 ---
 
-## Phase 7: Final results & poster (Weeks 12-14 · early-mid January, adjust to your gala date)
+## Phase 7: Final results & poster (Nov 29-Dec 3 · everything due Thu Dec 3)
 
 **Both**
-- [ ] Freeze the model; rerun final numbers on the full 2026 season
+- [ ] Freeze the model (Sun Nov 29); rescore 2025 once with the final version; add the week 12 live results (Tue Dec 1)
 - [ ] Fill every row of `docs/POSTER_EVIDENCE.md`
 - [ ] Draft the poster together; each partner writes their own sections first
 - [ ] Have someone outside the project read the poster and ask questions
@@ -217,12 +240,12 @@ Only if Phases 3-5 are done.
 
 ---
 
-## Phase 8: Research gala prep (final week)
+## Phase 8: Research gala prep (Dec 4-10 · gala Fri Dec 11)
 
 - [ ] Write a 60-second pitch and a 3-minute walkthrough of the poster; practice both
 - [ ] Prepare answers to likely questions: *How do you know you didn't cheat (leakage)? Why not just use ESPN's projections? What would you do with more time?*
 - [ ] Put a QR code on the poster linking to the GitHub repo
-- [ ] Optional: a laptop or tablet showing the live predictions or dashboard
+- [ ] Live demo: a laptop or tablet showing predictions for the upcoming week's games (commit week 14 predictions before Thu Dec 10)
 
 ---
 
