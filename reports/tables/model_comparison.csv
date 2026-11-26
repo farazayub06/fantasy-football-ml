@@ -19,16 +19,16 @@ Baseline 2: last 3 avg,real_role,RB,6.270762910798123,852
 Baseline 2: last 3 avg,real_role,WR,5.3941512702078525,1732
 Baseline 2: last 3 avg,real_role,TE,4.255592705167174,987
 Baseline 2: last 3 avg,real_role,ALL,5.553939542084249,4091
-Linear regression,all,QB,6.436707886894879,583
-Linear regression,all,RB,4.494869531985627,1424
+Linear regression,all,QB,6.436707886894874,583
+Linear regression,all,RB,4.494869531985629,1424
 Linear regression,all,WR,4.311801571580367,2270
-Linear regression,all,TE,3.62467459910147,1150
-Linear regression,all,ALL,4.4425023526923475,5427
-Linear regression,real_role,QB,6.652887682919198,520
-Linear regression,real_role,RB,5.78057898859555,852
+Linear regression,all,TE,3.624674599101473,1150
+Linear regression,all,ALL,4.442502352692348,5427
+Linear regression,real_role,QB,6.6528876829191965,520
+Linear regression,real_role,RB,5.780578988595545,852
 Linear regression,real_role,WR,5.007162238563954,1732
-Linear regression,real_role,TE,3.907672679818233,987
-Linear regression,real_role,ALL,5.112156642770656,4091
+Linear regression,real_role,TE,3.9076726798182353,987
+Linear regression,real_role,ALL,5.112156642770655,4091
 Gradient boosting,all,QB,6.645395062601133,583
 Gradient boosting,all,RB,4.590064792480263,1424
 Gradient boosting,all,WR,4.368379600203701,2270
