@@ -63,6 +63,30 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-11-25 · Preston · Phase 4 (week 12 predictions)
+
+**What I did:**
+- Retrained linear regression (one model per position) on every played game, 2020 through 2026 week 11
+- Predicted week 12 for every player who played in the last 3 weeks; saved `predictions/2026/week_12.csv` with our prediction, the Baseline 2 (last-3 average) prediction, and a real-role flag
+- Committed at ___ (before the first week 12 game, Wed 8:00 pm ET)
+
+**Numbers / results:**
+- 
+
+**What surprised me:**
+- 
+
+**Problems or open questions:**
+- Some predicted players may end up inactive; only players who actually play will be scored
+- Live model trains on 2026 games too (updates Decision 1's "retrain on 2020-2025"); add to DECISIONS.md
+
+**Saved for the poster:**
+- `predictions/2026/week_12.csv` (first live prediction; commit timestamp proves it was made in advance)
+
+**Next step:**
+- After week 12 finishes: score it (MAE by position, model vs Baseline 2, real-role and all players), start `reports/tables/live_season_record.csv`, note the 3 biggest misses
+- Before week 13: move the weekly steps into `src/pipeline/weekly_update.py`
+
 ### 2026-11-25 · Preston · Phase 4 prep (upcoming-week rows)
 
 **What I did:**
