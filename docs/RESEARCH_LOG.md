@@ -63,6 +63,31 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-11-25 · Preston · Phase 4 prep (upcoming-week rows)
+
+**What I did:**
+- Refreshed data (notebooks 01 → 02) through 2026 week 11
+- Added a cell to `04_features` (after cell 0) that adds a placeholder row for each player's next game: finds the next unplayed week automatically (earliest 2026 regular-season week with no final score), takes every player who played in the last 3 weeks, attaches his team's upcoming game (opponent, home/away, rest days, Vegas total, spread, implied total), and marks it `is_upcoming = 1`
+- The existing feature cells fill these rows automatically, because every feature uses only earlier games (`shift(1)`)
+- Added `is_upcoming` to the saved identifier columns
+
+**Numbers / results:**
+- Predicting week 12 · 457 upcoming player-games added (QB 51 · RB 115 · WR 188 · TE 103)
+- Spot check: upcoming rows have `last3`, `implied_total` and opponent features filled; `fantasy_points_ppr` blank (not played yet)
+
+**What surprised me:**
+- No new feature code was needed; the shift-based features handle future games on their own
+
+**Problems or open questions:**
+- Players who end up inactive or injured still get a prediction; only players who actually play will be scored
+- Must run on Tuesday/Wednesday after Monday Night Football; mid-weekend, part of the week is already played
+
+**Saved for the poster:**
+- Nothing new yet (this is groundwork for the live 2026 test)
+
+**Next step:**
+- Notebook 05: retrain on all played games, predict the upcoming week, save `predictions/2026/week_12.csv`, commit before Wednesday's (Thanksgiving schedule) first game
+
 ### 2026-11-20 · Preston · Phase 3 (baselines and models)
 
 **What I did:**

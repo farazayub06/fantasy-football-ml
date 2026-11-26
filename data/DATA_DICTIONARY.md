@@ -42,6 +42,7 @@ Full nflverse column definitions: [player stats](https://nflreadr.nflverse.com/a
 | `season` | NFL season (2020-2026); used for the train/test/live split | player stats |
 | `week` | Week of the season | player stats |
 | `history_flag` | `ok` (has earlier games this season) · `season_opener` (first game = team's first game) · `limitation_returning` (first game came later; seen in an earlier season) · `limitation_new` (first game came later; never seen before). Only `ok` rows are used for training and scoring | built in `04_features` |
+| `is_upcoming` | 1 = game not played yet (a placeholder row for next week's prediction; target is blank), 0 = played | built in `04_features` |
 
 ### Target (what the model predicts)
 
