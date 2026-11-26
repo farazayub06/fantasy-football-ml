@@ -68,7 +68,7 @@ Both partners add an entry at the end of **every** work session, newest at the t
 **What I did:**
 - Retrained linear regression (one model per position) on every played game, 2020 through 2026 week 11
 - Predicted week 12 for every player who played in the last 3 weeks; saved `predictions/2026/week_12.csv` with our prediction, the Baseline 2 (last-3 average) prediction, and a real-role flag
-- Committed at ___ (before the first week 12 game, Wed 8:00 pm ET)
+- Committed at Wed Nov, 25 at 7:46 pm ET (before the first week 12 game, Wed 8:00 pm ET)
 
 **Numbers / results:**
 - 

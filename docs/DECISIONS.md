@@ -105,3 +105,9 @@ Every important choice, why you made it, and what else you considered. Judges at
 **Why:** The model needs feature rows for games that haven't happened. Adding placeholder rows before the feature cells lets the same leakage-safe code (only earlier games) build their features, so live predictions use exactly the features the model was tested on.
 **Limitations:** Inactive or injured players still get predictions (no injury data yet); they're excluded when scoring. A player who hasn't played in 3+ weeks (e.g. returning from injury) gets no prediction.
 **Alternatives considered:** A separate feature script for future games (duplicate code that could drift from the tested features); predicting only for real-role players (we keep everyone and filter when scoring, same as the 2025 test).
+
+### 2026-11-25 · Live model training data · Preston
+
+**Decision:** For live 2026 predictions, retrain on every played game from 2020 through the most recent completed week of 2026 (updates Decision 1's "retrain on 2020-2025").
+**Why:** Recent games show players' current roles best, and they're still only past data, so there's no leakage. The 2025 test score stays the reported benchmark.
+**Alternatives considered:** Train on 2020-2025 only (ignores this season's role changes).
