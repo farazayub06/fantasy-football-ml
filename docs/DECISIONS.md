@@ -98,3 +98,10 @@ Every important choice, why you made it, and what else you considered. Judges at
 **Why:** Chosen on the 2024 validation season (trained on 2020-2023, real-role players): linear regression beat default gradient boosting at every position (MAE QB 6.27 vs 6.58, RB 5.49 vs 5.55, TE 3.86 vs 3.97, WR 5.22 vs 5.27). The 2025 test confirms it: linear was best in every row and beat the last-3 baseline by 7.1-9.9% on real-role players. It's also simpler and easier to explain.
 **Alternatives considered:** Default gradient boosting (close for RB/WR, worse for QB); tuned gradient boosting not yet tried (planned for Phase 5, tuned on 2024 only).
 **Effect on results:** Real-role MAE, 2025 test: linear 5.11 vs baseline 5.55 (7.9% better).
+
+### 2026-11-25 · Building rows for upcoming games · Preston
+
+**Decision:** Each week, add one row per player for the next unplayed week. Players included: anyone who played in the last 3 weeks of the season, on his most recent team. Next week = the earliest 2026 regular-season week with no final score. Teams on bye get no rows. Rows are marked `is_upcoming = 1`.
+**Why:** The model needs feature rows for games that haven't happened. Adding placeholder rows before the feature cells lets the same leakage-safe code (only earlier games) build their features, so live predictions use exactly the features the model was tested on.
+**Limitations:** Inactive or injured players still get predictions (no injury data yet); they're excluded when scoring. A player who hasn't played in 3+ weeks (e.g. returning from injury) gets no prediction.
+**Alternatives considered:** A separate feature script for future games (duplicate code that could drift from the tested features); predicting only for real-role players (we keep everyone and filter when scoring, same as the 2025 test).
