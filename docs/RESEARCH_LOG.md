@@ -63,6 +63,82 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-11-26 · Preston · Phase 5 (feature importance: how we tested)
+
+**Goal:** Measure which features and feature groups the model relies on, by position, to test H2 and H3, without using the 2025 test season.
+
+**Data:**
+- Models trained on 2020-2023, importance measured on 2024 (the tuning/validation season). 2025 is untouched, because tomorrow's feature changes are decided from these results, and decisions must not come from the test set
+- Same rows as all other results: only games with history (`history_flag == "ok"`), played games only (`is_upcoming == 0`)
+- Training uses all players; importance is measured on real-role players only (`offense_pct_last3` ≥ 0.25), the headline group
+
+**Model:** Identical to the final model: linear regression, one per position, blanks filled with the training median plus "was missing" flags; features that are 100% blank for a position are skipped (EPA/att for non-QBs). Using the same model ensures we measure the importance of the model we actually report. Check: baseline 2024 MAEs matched notebook 05 (QB 6.27, RB 5.49, TE 3.86, WR 5.22).
+
+**Method: permutation importance**
+1. Score the model on 2024 (MAE)
+2. Shuffle one feature's values randomly across rows, so it becomes noise but keeps its normal range of values
+3. Predict again and score; importance = shuffled MAE − normal MAE (points of accuracy lost)
+4. Repeat 10 times with different shuffles and average (fixed random seed 42, so results are reproducible); the std shows how stable the estimate is
+- No retraining: only inputs are scrambled, so the result describes what this trained model depends on
+
+**Group importance:** Shuffling one feature underestimates correlated features, because related features cover for it (e.g. targets, receptions, WOPR). So we also shuffled whole groups at once, keeping each row's group values together: history (3 features), usage (9), production (4), efficiency (4), matchup/context (6). Every feature is in exactly one group (checked in code). This is the version used to judge H2.
+
+**Why permutation importance instead of regression coefficients:** coefficients depend on each feature's scale (snap % is 0-1, passing yards in the hundreds), so they can't be compared directly; permutation importance is in one unit for every feature, points of MAE.
+
+**Limitations:**
+- Importance is measured on the 2020-2023 model, not the final model trained on 2020-2024 (expected to be very similar)
+- Shows what the model uses, not what causes fantasy points
+- Values near 0 can be slightly negative from random shuffle noise; treat anything within about one std of 0 as "not used"
+
+### 2026-11-26 · Preston · Phase 5 (feature importance: results)
+
+**What I did:**
+- Created `notebooks/06_feature_importance.ipynb`: permutation importance for each feature and for each feature group, per position, on 2024 real-role players (models trained on 2020-2023)
+- Saved `reports/tables/feature_importance.csv` and `reports/tables/group_importance.csv`
+
+**Numbers / results (MAE increase in PPR points when scrambled):**
+
+Group importance:
+
+| Group | QB | RB | TE | WR |
+|---|---|---|---|---|
+| usage | 0.157 | 0.446 | 0.987 | 1.023 |
+| history | 0.128 | 0.438 | 0.151 | 0.362 |
+| production (yards/TDs/INTs) | 0.155 | 0.299 | 0.002 | -0.002 |
+| matchup/context | 0.167 | 0.085 | 0.041 | 0.016 |
+| efficiency | 0.094 | 0.004 | 0.013 | 0.014 |
+
+Top features by position:
+- QB: season avg (0.182), rushing yards (0.164), carry share (0.098), carries (0.091), receptions (0.088), implied total (0.079), snap % (0.069), yards per carry (0.047), EPA/att (0.041), last-3 avg (0.034)
+- RB: season avg (0.527), carry share (0.376), rushing yards (0.273), snap % (0.160), targets (0.154), last game (0.125), carries (0.105), implied total (0.064)
+- TE: season avg (0.379), snap % (0.228), targets (0.134), receptions (0.098), WOPR (0.078), carry share (0.077), air yards share (0.039)
+- WR: season avg (0.668), WOPR (0.262), snap % (0.189), receptions (0.130), target share (0.064), last-3 avg (0.054), last game (0.028)
+
+**Hypotheses:**
+- H2 (usage > touchdowns/efficiency): **supported for WR, TE and RB.** Usage is the top group (WR 1.02, TE 0.99, RB 0.45, tied with history), and efficiency is near zero (≤ 0.014). **Not supported for QB:** all five groups are between 0.09 and 0.17.
+- H3 (different top features by position):
+  - WR: supported (WOPR, i.e. target and air-yards share, plus snap %)
+  - RB: mostly supported (carry share, rushing yards, snap %; implied total only #8)
+  - TE: partly supported (snap % and targets lead; air yards share small)
+  - QB: not as predicted. Rushing (yards, carry share, carries) matters most after season average; implied total #6, EPA/att #9
+
+**What surprised me:**
+- QB rushing is the most important QB signal after season average
+- Season average beats last-3 average at every position; recent form adds little once the season average is known
+- In the single-feature table, usage features each look small, but as a group they are the largest. They're correlated and cover for each other when only one is scrambled
+
+**Problems or open questions:**
+- `receptions_last3` ranks #5 for QBs (0.088), which is suspicious since QBs rarely catch passes. Check before trusting it
+- Efficiency features are near zero outside QB: candidates to drop (test on 2024)
+- Importance here is for the 2020-2023 model on 2024, not the final model trained through 2024
+
+**Saved for the poster:**
+- `reports/tables/feature_importance.csv`, `reports/tables/group_importance.csv`
+
+**Next step:**
+- Top-10 features figure (one panel per position), then error analysis (H4)
+- v3 candidates from this step: QB designed-run/rush-share feature; test dropping efficiency features
+
 ### 2026-11-25 · Preston · Phase 4 (week 12 predictions)
 
 **What I did:**
