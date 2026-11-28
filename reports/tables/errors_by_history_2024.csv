@@ -1,0 +1,5 @@
+history,games,model_mae,baseline_mae,bias,model_vs_base_pct
+1 game,326,4.88,5.44,0.28,10.33
+2 games,332,5.21,5.66,-0.43,7.97
+3 games,340,4.74,4.81,0.09,1.47
+4+ games,3091,5.13,5.51,-0.3,6.87

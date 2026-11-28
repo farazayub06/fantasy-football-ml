@@ -1,0 +1,4 @@
+role_change,games,model_mae,baseline_mae,bias,model_vs_base_pct
+role shrank,295,6.09,6.15,5.05,1.08
+stable,3596,4.96,5.35,-0.45,7.3
+role grew,198,5.91,6.44,-4.19,8.2
