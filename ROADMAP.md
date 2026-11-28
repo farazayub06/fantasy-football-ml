@@ -183,8 +183,8 @@ Week 12 is the only week scored before the Dec 3 deadline. Keep predicting each 
 ## Phase 5: Analysis & improvement (Nov 26-29 · model frozen Sun Nov 29)
 
 **Partner B**
-- [ ] Feature importance for the best model, by position (permutation importance or SHAP)
-- [ ] Error analysis: where is the model worst? By position, by week of season, by player type
+- [x] Feature importance for the best model, by position (permutation importance or SHAP)
+- [x] Error analysis: where is the model worst? By position, by week of season, by player type
 - [ ] Try one improvement and measure it: tune the model, or remove useless features
 
 **Partner A**

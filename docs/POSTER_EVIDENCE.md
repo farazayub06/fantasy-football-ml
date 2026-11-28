@@ -40,9 +40,9 @@ Every section of the final poster and the evidence it needs. Fill in the file pa
 ## Discussion & limitations
 | Item | Checkpoint | Owner | Saved at | Done |
 |---|---|---|---|---|
-| Hypothesis vs actual results | 5 | Both | `docs/RESEARCH_LOG.md` (H1: 2026-11-20 entry; H2, H3: 2026-11-26 entry; H4 pending error analysis) | [ ] |
+| Hypothesis vs actual results | 5 | Both | `docs/RESEARCH_LOG.md` (H1: 2026-11-20 entry; H2, H3: 2026-11-26 entry; H4: 2026-11-27 entry) | [x] |
 | 2-3 player examples (big hits and misses, with reasons) | 5 | B | `reports/tables/biggest_misses_2024.csv` (draft); candidates in "Planned poster examples" below | [ ] |
-| Where the model fails (error analysis) | 5 | B | `notebooks/07_error_analysis.ipynb`; `reports/tables/errors_by_*_2024.csv` (draft; rerun on 2025 after the model freeze) | [ ] |
+| Where the model fails (error analysis) | 5 | B | `notebooks/07_error_analysis.ipynb`; `reports/tables/errors_by_*_2024.csv`; summary in `docs/RESEARCH_LOG.md` (2026-11-27). Rerun on 2025 after the model freeze | [x] |
 | 3 limitations | 7 | Both | | [ ] |
 | 3 future directions | 7 | Both | | [ ] |
 

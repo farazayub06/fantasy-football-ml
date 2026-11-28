@@ -63,6 +63,99 @@ Both partners add an entry at the end of **every** work session, newest at the t
 
 ## Entries
 
+### 2026-11-27 · Preston · Phase 5 (error analysis: results)
+
+**What I did:**
+- Created `notebooks/07_error_analysis.ipynb`: model (linear regression, trained 2020-2023) vs Baseline 2 on 2024, broken down by amount of history, touchdowns scored, role change, and player type; listed the 15 biggest misses
+- Saved `reports/tables/errors_by_history_2024.csv`, `errors_by_tds_2024.csv`, `errors_by_role_change_2024.csv`, `errors_by_player_type_2024.csv`, `biggest_misses_2024.csv`
+
+**Numbers / results (2024, real-role players unless noted; bias = average of prediction − actual):**
+
+Early weeks (games of history this season):
+
+| History | Games | Model MAE | Baseline MAE | Bias | Model vs baseline |
+|---|---|---|---|---|---|
+| 1 game | 326 | 4.88 | 5.44 | +0.28 | +10.3% |
+| 2 games | 332 | 5.21 | 5.66 | −0.43 | +8.0% |
+| 3 games | 340 | 4.74 | 4.81 | +0.09 | +1.5% |
+| 4+ games | 3,091 | 5.13 | 5.51 | −0.30 | +6.9% |
+
+Touchdowns scored that game (QBs include TD passes):
+
+| TDs | Games | Model MAE | Baseline MAE | Bias | Model vs baseline |
+|---|---|---|---|---|---|
+| 0 | 2,815 | 4.09 | 4.51 | +2.47 | +9.3% |
+| 1 | 859 | 6.05 | 6.53 | −4.63 | +7.3% |
+| 2 | 287 | 9.26 | 9.23 | −8.81 | −0.4% |
+| 3+ | 128 | 11.22 | 10.83 | −11.04 | −3.6% |
+
+- Model MAE by TDs and position (0 / 1 / 2 / 3+): QB 8.52 / 3.85 / 4.32 / 9.67 · RB 4.62 / 5.35 / 12.04 / 19.02 · TE 3.13 / 6.76 / 14.24 / 32.82 · WR 4.07 / 7.15 / 16.52 / 32.35
+- 2+ TD games are 10% of games but about 20% of total error; games with any TD are 31% of games and about 45% of error
+
+Role change (this game's snap % minus last-3 average; ±25 points; injury proxy):
+
+| Role | Games | Model MAE | Baseline MAE | Bias | Model vs baseline |
+|---|---|---|---|---|---|
+| shrank | 295 | 6.09 | 6.15 | +5.05 | +1.1% |
+| stable | 3,596 | 4.96 | 5.35 | −0.45 | +7.3% |
+| grew | 198 | 5.91 | 6.44 | −4.19 | +8.2% |
+
+Player type (all players), model vs baseline: real-role QB +8.7%, RB +4.5%, TE +6.5%, WR +7.5%; backups QB −32.7% (67 games), RB −5.5%, TE +4.0%, WR −12.3%
+
+Biggest misses: all 15 were touchdown games (14 with 2+ TDs), all large underpredictions. Poster candidates (saved in `docs/POSTER_EVIDENCE.md`): Jauan Jennings 2024 wk 3 (8.1 → 46.5; 3+ TDs, snap % 52% → 85%), Zach Charbonnet wk 14 (8.1 → 38.3; snap % 38% → 80%), Ja'Marr Chase wk 10 (17.2 → 55.4; 3+ TDs)
+
+**Hypothesis H4 (biggest misses in early weeks, multi-TD games, teammate injuries):**
+- Multi-TD games: **strongly supported.** Error rises steeply with TDs, bias flips from +2.5 to −11, and at 2+ TDs the model is no better than the baseline
+- Teammate injuries (role-change proxy): **supported.** Both role jumps (bias −4.2) and role drops (+5.1) have higher error than stable roles
+- Early weeks: **not supported.** Players with 1-3 games of history are no harder to predict, and the model's edge over the baseline is largest with 1 game
+
+**What surprised me:**
+- Early weeks aren't a problem; the model makes up for thin history with Vegas lines and role features
+- The model loses to the baseline on backups at QB, RB and WR, even though bias is near zero (it predicts a middle value for players who usually score near 0)
+- For QBs the pattern reverses: a 0-TD game is the hardest to predict, because their normal is 1-2 TDs
+
+**Problems or open questions:**
+- Role change uses this game's snap %, so it's an analysis-only proxy; real injury reports are needed for a usable feature
+- "Role shrank" is often an in-game injury, which no pre-game data can predict
+- Snap-% jumps in the poster examples suggest teammates were out; verify the injury news before stating a cause
+
+**Saved for the poster:**
+- `reports/tables/errors_by_*_2024.csv`, `biggest_misses_2024.csv` (rerun on 2025 after the model freeze)
+
+**Next step (v3 candidates, each decided on the 2024 check):**
+- Red-zone / goal-line opportunity share (targets TD error, the largest source)
+- Injury features: teammate out, vacated target/carry share (targets "role grew")
+- Median-predicting model (absolute-error loss): fantasy points are right-skewed, so a mean-predicting model guesses too high in typical games and on backups, while MAE rewards the median
+- From feature importance: drop efficiency features; add a QB rushing feature
+
+### 2026-11-27 · Preston · Phase 5 (error analysis: how we tested)
+
+**Goal:** Find where the model fails, to test H4 (early weeks, multi-TD games, teammate injuries), without using the 2025 test season.
+
+**Data:**
+- Models trained on 2020-2023, analysis on 2024. These results decide tomorrow's v3 changes, so they can't come from 2025. After the model freeze, the same notebook is rerun with `EVAL_SEASON = 2025` for the poster (no decisions are made from that run)
+- Same rows as all other results: games with history (`history_flag == "ok"`), played games only (`is_upcoming == 0`); breakdowns use real-role players (`offense_pct_last3` ≥ 0.25) except the player-type table, which covers all players
+- What actually happened in each game (rushing, receiving and passing TDs; this game's snap %) was joined from `player_weeks_clean.parquet`. These columns are used **only to group the errors afterward**, never as model inputs, so there's no leakage
+
+**Model:** Identical to the final model (linear regression per position, median fill + missing flags, all-blank features skipped). Baseline 2 (last-3 average) is scored on exactly the same games.
+
+**Measures, per group:**
+- Games (sample size), model MAE, baseline MAE
+- Bias = average of (prediction − actual): positive = too high, negative = too low. MAE hides direction; bias shows it
+- Model vs baseline % = (baseline MAE − model MAE) ÷ baseline MAE: whether the model still beats the baseline in that situation
+
+**Breakdowns:**
+1. **Early weeks:** games of history this season (1, 2, 3, 4+), counted from each player's game order. Week 1 isn't included (dropped by Decision 2)
+2. **Touchdowns:** TDs scored that game (0, 1, 2, 3+), rushing + receiving; QBs also get TD passes. Also split by position
+3. **Role change (injury proxy):** this game's snap % minus the last-3 average. Big jumps (≥ +25 points) usually mean a teammate was out; big drops (≤ −25) often mean the player was hurt during the game or benched. Used because injury data isn't in the project yet
+4. **Player type:** position × real-role vs backup
+5. **Biggest misses:** the 15 largest absolute errors among real-role players, with TDs and snap % shown to explain each
+
+**Limitations:**
+- Role change is a proxy based on this game's snap %, not actual injury reports
+- Some groups are small (e.g. 128 games with 3+ TDs, 67 backup-QB games), so their numbers are less certain
+- Results describe the 2020-2023 model on 2024, not the final model; the 2025 rerun will confirm them
+
 ### 2026-11-26 · Preston · Phase 5 (feature importance: how we tested)
 
 **Goal:** Measure which features and feature groups the model relies on, by position, to test H2 and H3, without using the 2025 test season.
