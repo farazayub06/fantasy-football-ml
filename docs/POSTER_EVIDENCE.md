@@ -33,14 +33,14 @@ Every section of the final poster and the evidence it needs. Fill in the file pa
 | **Main table: MAE by model and position** | 3 | B | `reports/tables/model_comparison.csv`, `reports/tables/model_comparison_wide.csv` | [x] |
 | Figure: MAE by position, baseline vs best model | 3 | B | `reports/figures/mae_by_position.png` | [x] |
 | Figure: live 2026 MAE week by week, model vs baseline | 4 | B | `reports/figures/` | [ ] |
-| Figure: top features by position | 5 | B | `reports/figures/` | [ ] |
+| Figure: top features by position | 5 | B | `reports/figures/feature_importance_top10.png` (data: `reports/tables/feature_importance.csv`, `group_importance.csv`) | [x] |
 | Table: with vs without injury features | 5 | A | `reports/tables/` | [ ] |
 | *(Stretch)* Breakout detector precision | 6 | Both | | [ ] |
 
 ## Discussion & limitations
 | Item | Checkpoint | Owner | Saved at | Done |
 |---|---|---|---|---|
-| Hypothesis vs actual results | 5 | Both | `docs/RESEARCH_LOG.md` | [ ] |
+| Hypothesis vs actual results | 5 | Both | `docs/RESEARCH_LOG.md` (H1: 2026-11-20 entry; H2, H3: 2026-11-26 entry; H4 pending error analysis) | [ ] |
 | 2-3 player examples (big hits and misses, with reasons) | 5 | B | | [ ] |
 | Where the model fails (error analysis) | 5 | B | | [ ] |
 | 3 limitations | 7 | Both | | [ ] |
