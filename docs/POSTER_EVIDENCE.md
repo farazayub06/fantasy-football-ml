@@ -40,9 +40,9 @@ Every section of the final poster and the evidence it needs. Fill in the file pa
 ## Discussion & limitations
 | Item | Checkpoint | Owner | Saved at | Done |
 |---|---|---|---|---|
-| Hypothesis vs actual results | 5 | Both | `docs/RESEARCH_LOG.md` (H1: 2026-11-20 entry; H2, H3: 2026-11-26 entry; H4 pending error analysis) | [ ] |
-| 2-3 player examples (big hits and misses, with reasons) | 5 | B | | [ ] |
-| Where the model fails (error analysis) | 5 | B | | [ ] |
+| Hypothesis vs actual results | 5 | Both | `docs/RESEARCH_LOG.md` (H1: 2026-11-20 entry; H2, H3: 2026-11-26 entry; H4: 2026-11-27 entry) | [x] |
+| 2-3 player examples (big hits and misses, with reasons) | 5 | B | `reports/tables/biggest_misses_2024.csv` (draft); candidates in "Planned poster examples" below | [ ] |
+| Where the model fails (error analysis) | 5 | B | `notebooks/07_error_analysis.ipynb`; `reports/tables/errors_by_*_2024.csv`; summary in `docs/RESEARCH_LOG.md` (2026-11-27). Rerun on 2025 after the model freeze | [x] |
 | 3 limitations | 7 | Both | | [ ] |
 | 3 future directions | 7 | Both | | [ ] |
 
@@ -53,3 +53,21 @@ Every section of the final poster and the evidence it needs. Fill in the file pa
 | 60-second pitch, practiced | Both | [ ] |
 | Answers to likely questions | Both | [ ] |
 | Live demo (optional) | A | [ ] |
+
+---
+
+## Planned poster examples (biggest misses)
+
+From the 2024 error analysis (`notebooks/07_error_analysis.ipynb`, cell 7). All 15 biggest misses were touchdown games (14 with 2+ TDs), and all were large underpredictions, so the examples illustrate H4: TD spikes and sudden role changes are where the model fails.
+
+| Player | Game | Predicted → actual | Why it was missed |
+|---|---|---|---|
+| Jauan Jennings (WR, SF) | 2024 week 3 vs LA | 8.1 → 46.5 | 3+ TDs **and** a role jump (snap % 52% → 85%) |
+| Zach Charbonnet (RB, SEA) | 2024 week 14 vs ARI | 8.1 → 38.3 | Backup suddenly starting (snap % 38% → 80%), 2 TDs |
+| Ja'Marr Chase (WR, CIN) | 2024 week 10 vs BAL | 17.2 → 55.4 | Star's ceiling game: model expected a good game but can't foresee 3+ TDs |
+
+**Before the poster:**
+- Check the injury news for those weeks before stating a cause (the snap-% jumps suggest a teammate was out)
+- After the model freeze, rerun notebook 07 with `EVAL_SEASON = 2025` and decide whether to use 2025 examples instead (2025 is the headline season)
+- Consider adding one "very right" example (a big game the model predicted well) for balance
+
